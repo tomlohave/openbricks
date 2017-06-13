@@ -88,7 +88,11 @@ TOOLCHAIN_LANGUAGES=c
 
 set_ccache
 
-export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
+if [ -n "$DOOZER_CONCURRENCY_MAKE_LEVEL" ] ; then
+  unset MAKEFLAGS
+else
+  export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
+fi
 
 if [ -z "$PATH" ] || [ "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:}" ]; then
   export PATH="$ROOT/$TOOLCHAIN/bin:$PATH"

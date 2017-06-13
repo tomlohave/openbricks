@@ -69,7 +69,7 @@ fi
 make silentoldconfig
 
 
-make || exit 1
+# make || exit 1
 
 
 ########################### Sending our files now #########################

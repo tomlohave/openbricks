@@ -13,6 +13,11 @@ if [ -d /project/.ccache ] ; then
  rm -rf /project/.ccache
 fi
 
+# Let's try to use ccache in tmpfs
+if [ -d /project/.ccache-$1 ] ; then
+ cp -R /project/.ccache-$1 /tmp
+fi
+
 REPONAME=openbricks
 REPO=/project/repo/checkout
 CONFNAME=$1
@@ -54,7 +59,7 @@ echo "######################"
 DOOZER_CONCURRENCY_MAKE_LEVEL=$(echo $MAKEFLAGS |cut -d, -f2)
 echo "Using DOOZER_CONCURRENCY_MAKE_LEVEL=$DOOZER_CONCURRENCY_MAKE_LEVEL : MAKEFLAGS was $MAKEFLAGS"
 echo DOOZER_CONCURRENCY_MAKE_LEVEL=$DOOZER_CONCURRENCY_MAKE_LEVEL >> build/config/options-doozer
-echo "DOOZER_TARGET_CCACHE=/project/.ccache-$1" >> build/config/options-doozer
+echo "DOOZER_TARGET_CCACHE=/tmp/.ccache-$1" >> build/config/options-doozer
 
 
 if grep -q 'CONFIG_OPT_TARGET_FLAT=y' $CONFFILE; then
@@ -70,6 +75,10 @@ make silentoldconfig
 
 
 # make || exit 1
+
+if [ -d /project/.ccache-$1 ] ; then
+ cp -R /tmp/.ccache-$1 /project
+fi
 
 
 ########################### Sending our files now #########################

@@ -74,7 +74,7 @@ fi
 make silentoldconfig
 
 
-# make || exit 1
+make || exit 1
 
 if [ -d /project/.ccache-$1 ] ; then
  cp -R /tmp/.ccache-$1 /project

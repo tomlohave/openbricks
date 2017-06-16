@@ -89,7 +89,7 @@ TOOLCHAIN_LANGUAGES=c
 set_ccache
 
 if [ -n "$DOOZER_CONCURRENCY_MAKE_LEVEL" ] ; then
-  export MAKEFLAGS=-j
+  echo "MAKEFLAGS=$MAKEFLAGS"
 else
   export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
 fi
